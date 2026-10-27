@@ -77,4 +77,4 @@ MIT licence (see `LICENSE`). Suggested citation (to be completed): Mekonnen, N. 
 * `scripts/analyse_headroom.py outputs/swmm_headroom.csv` writes `outputs/headroom_pf.csv` and `outputs/headroom_threshold.csv`. Result: Pf changes by at most 0.006 between 0 and 2 m.
 * `scripts/make_diagrams.py` draws the workflow and corridor figures.
 
-Authors: Neguse Solomon Mekonnen (University of Padova), Wondesen Tsegaye Legesse.
+Authors: Neguse Solomon Mekonnen, Wondesen Tsegaye Legesse.
