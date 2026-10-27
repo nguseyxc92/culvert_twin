@@ -1,0 +1,5 @@
+node,area_ha,channel_travel_min,area_over_50ha,note
+N1,48.0,14.6,False,overland/inlet time must be added; Rational Method not to be used if Tc > 30 min
+N2,65.0,13.4,True,overland/inlet time must be added; Rational Method not to be used if Tc > 30 min
+N3,42.0,19.1,False,overland/inlet time must be added; Rational Method not to be used if Tc > 30 min
+N4,58.0,15.9,True,overland/inlet time must be added; Rational Method not to be used if Tc > 30 min

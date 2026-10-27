@@ -1,0 +1,9 @@
+idf_source,capacity_source,node,i_mm_hr,Q_peak,Q_cap(beta=0.30),CF,critical_beta,overloaded_clean
+registry_table,closed,N1,68.0,7.26,3.84,1.89,0.0,True
+registry_table,closed,N2,68.0,10.44,4.89,2.13,0.0,True
+registry_table,closed,N3,68.0,6.51,2.35,2.77,0.0,True
+registry_table,closed,N4,68.0,8.55,5.1,1.68,0.0,True
+formula,closed,N1,41.75,4.46,3.84,1.16,0.222,False
+formula,closed,N2,41.75,6.41,4.89,1.31,0.153,False
+formula,closed,N3,41.75,4.0,2.35,1.7,0.0,True
+formula,closed,N4,41.75,5.25,5.1,1.03,0.286,False

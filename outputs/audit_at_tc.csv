@@ -1,0 +1,17 @@
+idf,Tr_yr,node,Tc_basis,Tc_min,i_mm_hr,Q_peak,Q_cap(b=0.30),CF,critical_beta
+candidate,10,N1,velocity,11.9,73.4,7.83,3.84,2.04,0.0
+candidate,10,N1,kirpich,44.3,38.7,4.13,3.84,1.08,0.263
+candidate,10,N2,velocity,11.7,73.7,11.32,4.89,2.31,0.0
+candidate,10,N2,kirpich,47.7,36.9,5.67,4.89,1.16,0.223
+candidate,10,N3,velocity,15.5,66.2,6.34,2.35,2.7,0.0
+candidate,10,N3,kirpich,54.4,34.0,3.26,2.35,1.39,0.117
+candidate,10,N4,velocity,11.9,73.4,9.23,5.1,1.81,0.0
+candidate,10,N4,kirpich,50.3,35.7,4.49,5.1,0.88,0.359
+registry_formula,10,N1,velocity,11.9,62.8,6.7,3.84,1.75,0.0
+registry_formula,10,N1,kirpich,44.3,33.6,3.59,3.84,0.94,0.332
+registry_formula,10,N2,velocity,11.7,63.1,9.69,4.89,1.98,0.0
+registry_formula,10,N2,kirpich,47.7,32.1,4.94,4.89,1.01,0.295
+registry_formula,10,N3,velocity,15.5,56.8,5.44,2.35,2.31,0.0
+registry_formula,10,N3,kirpich,54.4,29.7,2.84,2.35,1.21,0.199
+registry_formula,10,N4,velocity,11.9,62.8,7.9,5.1,1.55,0.046
+registry_formula,10,N4,kirpich,50.3,31.1,3.92,5.1,0.77,0.417

@@ -1,0 +1,5 @@
+node,L_m,S,area_ha,Tc_velocity_min,Tc_kirpich_min,kirpich_over_30min,area_over_50ha
+N1,2500,0.012,48.0,11.9,44.3,True,False
+N2,2250,0.008,65.0,11.7,47.7,True,True
+N3,2000,0.0045,42.0,15.5,54.4,True,False
+N4,2000,0.0055,58.0,11.9,50.3,True,True

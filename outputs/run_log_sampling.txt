@@ -1,0 +1,110 @@
+LHS design: N = 2000, d = 13, seed = 20261024, built in 6.7 s
+assumed ranges: {'manning_n': {'dist': 'uniform', 'low': 0.012, 'high': 0.015, 'note': 'Chow 1959 / Tessema 2011 Table 2.4 concrete box 0.012-0.015; per node, independent'}, 'beta': {'dist': 'uniform', 'low': 0.0, 'high': 0.5, 'note': 'ASSUMED siltation range; no local measurement exists; per node, independent'}, 'C': {'dist': 'uniform', 'halfwidth': 0.05, 'cap': 0.95, 'note': 'ASSUMED +-0.05 around registry C, capped at 0.95 (Tessema 2016 Table 4-2 upper bound for asphalt)'}}
+
+== FAILURE PROBABILITY Pf = P[Q_peak > Q_cap] (algebraic Rational/Manning baseline; PROVISIONAL) ==
+             idf  Tr_yr node     Pf  Pf_lo95  Pf_hi95  beta_R  CF_median  CF_p05  CF_p95  E_dQ_m3s
+       candidate     10   N1 0.6690   0.6481   0.6893   -0.44       1.17    0.70    2.16      1.15
+       candidate     10   N2 0.7455   0.7260   0.7641   -0.66       1.29    0.76    2.41      2.02
+       candidate     10   N3 0.8935   0.8792   0.9063   -1.25       1.54    0.90    2.86      1.55
+       candidate     10   N4 0.4870   0.4651   0.5089    0.03       0.99    0.57    1.85      0.86
+       candidate     25   N1 0.8410   0.8243   0.8564   -1.00       1.42    0.85    2.62      2.08
+       candidate     25   N2 0.9025   0.8887   0.9147   -1.30       1.56    0.92    2.92      3.45
+       candidate     25   N3 0.9830   0.9763   0.9878   -2.12       1.86    1.09    3.47      2.45
+       candidate     25   N4 0.6845   0.6638   0.7045   -0.48       1.19    0.70    2.24      1.70
+       candidate     50   N1 0.9390   0.9276   0.9487   -1.55       1.65    0.98    3.03      3.05
+       candidate     50   N2 0.9750   0.9672   0.9810   -1.96       1.81    1.06    3.38      4.86
+       candidate     50   N3 1.0000   0.9981   1.0000    -inf       2.15    1.26    4.01      3.29
+       candidate     50   N4 0.8100   0.7922   0.8266   -0.88       1.38    0.81    2.59      2.64
+registry_formula     10   N1 0.5135   0.4916   0.5354   -0.03       1.01    0.60    1.85      0.66
+registry_formula     10   N2 0.6125   0.5910   0.6336   -0.29       1.11    0.66    2.07      1.24
+registry_formula     10   N3 0.7795   0.7608   0.7971   -0.77       1.33    0.79    2.46      1.03
+registry_formula     10   N4 0.3485   0.3279   0.3697    0.39       0.85    0.50    1.59      0.45
+registry_formula     25   N1 0.6960   0.6755   0.7158   -0.51       1.20    0.72    2.20      1.25
+registry_formula     25   N2 0.7800   0.7613   0.7976   -0.77       1.32    0.78    2.47      2.18
+registry_formula     25   N3 0.9135   0.9004   0.9250   -1.36       1.58    0.94    2.93      1.67
+registry_formula     25   N4 0.5120   0.4901   0.5339   -0.03       1.01    0.59    1.89      0.94
+registry_formula     50   N1 0.8155   0.7979   0.8319   -0.90       1.37    0.82    2.51      1.88
+registry_formula     50   N2 0.8865   0.8719   0.8997   -1.21       1.51    0.89    2.81      3.15
+registry_formula     50   N3 0.9785   0.9712   0.9840   -2.02       1.80    1.07    3.35      2.28
+registry_formula     50   N4 0.6595   0.6384   0.6799   -0.41       1.15    0.68    2.16      1.51
+      user_table     10   N1 0.9935   0.9889   0.9962   -2.48       2.02    1.18    3.80      4.80
+      user_table     10   N2 0.9980   0.9949   0.9992   -2.88       2.21    1.26    4.20      7.32
+      user_table     10   N3 1.0000   0.9981   1.0000    -inf       2.60    1.49    4.98      4.62
+      user_table     10   N4 0.9260   0.9137   0.9367   -1.45       1.70    0.96    3.24      4.43
+      user_table     25   N1 1.0000   0.9981   1.0000    -inf       2.32    1.35    4.34      6.19
+      user_table     25   N2 1.0000   0.9981   1.0000    -inf       2.53    1.45    4.80      9.27
+      user_table     25   N3 1.0000   0.9981   1.0000    -inf       2.98    1.71    5.69      5.72
+      user_table     25   N4 0.9830   0.9763   0.9878   -2.12       1.94    1.10    3.71      5.94
+      user_table     50   N1 1.0000   0.9981   1.0000    -inf       2.62    1.53    4.89      7.62
+      user_table     50   N2 1.0000   0.9981   1.0000    -inf       2.86    1.64    5.43     11.28
+      user_table     50   N3 1.0000   0.9981   1.0000    -inf       3.38    1.95    6.43      6.86
+      user_table     50   N4 0.9985   0.9956   0.9995   -2.97       2.19    1.25    4.17      7.54
+
+== Pf matrix ==
+ node                        N1      N2      N3      N4
+idf              Tr_yr                                
+candidate        10     0.6690  0.7455  0.8935  0.4870
+                 25     0.8410  0.9025  0.9830  0.6845
+                 50     0.9390  0.9750  1.0000  0.8100
+registry_formula 10     0.5135  0.6125  0.7795  0.3485
+                 25     0.6960  0.7800  0.9135  0.5120
+                 50     0.8155  0.8865  0.9785  0.6595
+user_table       10     0.9935  0.9980  1.0000  0.9260
+                 25     1.0000  1.0000  1.0000  0.9830
+                 50     1.0000  1.0000  1.0000  0.9985
+
+== Rank of node by Pf (1 = most likely to fail); ties share a rank ==
+ node                     N1   N2   N3   N4
+idf              Tr_yr                    
+candidate        10     3.0  2.0  1.0  4.0
+                 25     3.0  2.0  1.0  4.0
+                 50     3.0  2.0  1.0  4.0
+registry_formula 10     3.0  2.0  1.0  4.0
+                 25     3.0  2.0  1.0  4.0
+                 50     3.0  2.0  1.0  4.0
+user_table       10     3.0  2.0  1.0  4.0
+                 25     1.0  1.0  1.0  4.0
+                 50     1.0  1.0  1.0  4.0
+
+== CONVERGENCE of Pf with N (registry_formula, 10-yr) ==
+ node      N1      N2      N3      N4
+N                                   
+250   0.4840  0.6120  0.7800  0.3480
+500   0.5260  0.6040  0.7740  0.3480
+1000  0.5120  0.6040  0.7730  0.3420
+2000  0.5135  0.6125  0.7795  0.3485
+4000  0.5098  0.6095  0.7827  0.3430
+
+== CONVERGENCE of Pf with N (candidate, 10-yr) ==
+ node     N1      N2      N3      N4
+N                                  
+250   0.652  0.7520  0.9120  0.4920
+500   0.656  0.7660  0.8980  0.5120
+1000  0.663  0.7510  0.8930  0.4970
+2000  0.669  0.7455  0.8935  0.4870
+4000  0.673  0.7505  0.8902  0.4905
+
+== CONVERGENCE of Pf with N (user_table, 10-yr) ==
+ node      N1      N2   N3      N4
+N                                
+250   0.9840  1.0000  1.0  0.9080
+500   0.9880  0.9980  1.0  0.9260
+1000  0.9940  0.9990  1.0  0.9300
+2000  0.9935  0.9980  1.0  0.9260
+4000  0.9928  0.9985  1.0  0.9218
+
+== Spearman rho of log(CF) with each input (registry_formula, 10-yr) ==
+ node      N1     N2     N3     N4
+input                            
+C      0.103  0.088  0.100  0.093
+beta   0.828  0.812  0.820  0.802
+n      0.181  0.170  0.178  0.172
+u_tc  -0.503 -0.528 -0.511 -0.541
+
+== Spearman rho of log(CF) with each input (candidate, 10-yr) ==
+ node      N1     N2     N3     N4
+input                            
+C      0.102  0.088  0.100  0.092
+beta   0.822  0.805  0.813  0.794
+n      0.179  0.169  0.177  0.171
+u_tc  -0.513 -0.538 -0.523 -0.551

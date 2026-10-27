@@ -1,0 +1,6 @@
+hypothesis,max_abs_error_pct,rms_error_pct,explains_table
+"closed box, n = 0.015",34.3,16.1,False
+"open top, n = 0.015",68.0,47.0,False
+"closed box, n fitted per node (beta=0)",24.1,13.1,False
+"open top, n fitted per node (beta=0)",12.6,6.8,False
+"closed box, twin/double barrels x2 (nodes 2,4)",168.5,89.1,False

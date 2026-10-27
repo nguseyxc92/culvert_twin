@@ -1,0 +1,166 @@
+== STATUS (from registry) ==
+  rational_formula         VERIFIED
+  idf_constants            NOT_VERIFIED
+  idf_table_30min          FAILS_INTERNAL_CHECK
+  storm_duration           CONCERN
+  rational_applicability   CONCERN
+  runoff_coefficient       NOT_VERIFIED
+  manning_n                VERIFIED_UPPER_BOUND
+  return_period            PARTLY
+  culvert_dimensions       NOT_VERIFIED
+  qcap_table               FAILS_REPRODUCTION
+  bed_slopes               VERIFIED_ARITHMETIC
+  areas_coordinates        NOT_VERIFIED
+  siltation_range          NOT_VERIFIED
+  observations             NONE
+
+== IDF: registry table vs registry formula (td = 30 min) ==
+  Tr_yr  registry_mm_hr  formula_mm_hr  ratio_registry_over_formula  implied_td_min
+     2            42.5          30.75                        1.382            14.9
+     5            54.8          36.59                        1.497            12.0
+    10            68.0          41.75                        1.629             9.3
+    25            81.4          49.68                        1.638             9.1
+    50            94.2          56.68                        1.662             8.7
+   100           108.5          64.66                        1.678             8.4
+
+  table power-law exponent k = 0.237 (formula m = 0.19), R2 = 0.9919, max residual 5.3%
+
+== REPRODUCTION SUMMARY ==
+result               PASS  FAIL
+item                           
+Q_cap                   0    40
+Q_peak (registry i)     4     0
+bed slope               4     0
+capacity factor         4     0
+surcharge volume        4     0
+
+== Q_cap HYPOTHESES (does any single explanation reproduce the table?) ==
+                                     hypothesis  max_abs_error_pct  rms_error_pct  explains_table
+                         closed box, n = 0.015               34.3           16.1           False
+                           open top, n = 0.015               68.0           47.0           False
+        closed box, n fitted per node (beta=0)               24.1           13.1           False
+          open top, n fitted per node (beta=0)               12.6            6.8           False
+closed box, twin/double barrels x2 (nodes 2,4)              168.5           89.1           False
+
+== implied n (closed box) by node and beta; constant => a pure roughness difference ==
+beta    0.00    0.15    0.30    0.50    0.75
+node                                        
+N1    0.0185  0.0177  0.0169  0.0158  0.0145
+N2    0.0172  0.0164  0.0155  0.0145  0.0131
+N3    0.0185  0.0176  0.0168  0.0158  0.0145
+N4    0.0201  0.0192  0.0182  0.0170  0.0155
+
+== AUDIT SCENARIOS, 10-yr, beta=0.30 (CF = Q_peak/Q_cap) ==
+node                              N1    N2    N3    N4
+idf_source     capacity_source                        
+formula        closed           1.16  1.31  1.70  1.03
+               open             0.90  1.01  1.31  0.79
+               registry         1.31  1.36  1.90  1.25
+registry_table closed           1.89  2.13  2.77  1.68
+               open             1.46  1.64  2.14  1.29
+               registry         2.13  2.21  3.10  2.03
+
+  critical beta (siltation at which capacity = Q_peak; 0 = overloaded even when clean):
+node                               N1     N2     N3     N4
+idf_source     capacity_source                            
+formula        closed           0.222  0.153  0.000  0.286
+               open             0.355  0.295  0.136  0.413
+               registry         0.118  0.083  0.000  0.151
+registry_table closed           0.000  0.000  0.000  0.000
+               open             0.060  0.000  0.000  0.151
+               registry         0.000  0.000  0.000  0.000
+
+== ADOPTED CAPACITY METHOD: closed (full-flow box, soffit wetted) ==
+    idf_source capacity_source node  i_mm_hr  Q_peak  Q_cap(beta=0.30)   CF  critical_beta  overloaded_clean
+registry_table          closed   N1    68.00    7.26              3.84 1.89          0.000              True
+registry_table          closed   N2    68.00   10.44              4.89 2.13          0.000              True
+registry_table          closed   N3    68.00    6.51              2.35 2.77          0.000              True
+registry_table          closed   N4    68.00    8.55              5.10 1.68          0.000              True
+       formula          closed   N1    41.75    4.46              3.84 1.16          0.222             False
+       formula          closed   N2    41.75    6.41              4.89 1.31          0.153             False
+       formula          closed   N3    41.75    4.00              2.35 1.70          0.000              True
+       formula          closed   N4    41.75    5.25              5.10 1.03          0.286             False
+
+== AACRA (Bole, Tedla 2016) cross-check: 30-min intensity must be <= 15-min intensity ==
+  Tr_yr  AACRA_Bole_15min  registry_30min  registry_30min_le_15min  formula_15min  formula_30min  formula_15min_over_AACRA_15min
+     2                63            42.5                     True           42.4           30.7                            0.67
+   100               105           108.5                    False           89.1           64.7                            0.85
+
+== CANDIDATE ERA A2 constants (UNVERIFIED, pasted 24 Oct 2026) vs registry table and AACRA ==
+  Tr_yr  registry_table  candidate_15min  candidate_30min  err_vs_table_at_15min_pct  err_vs_table_at_30min_pct  AACRA_15min  candidate_vs_AACRA_15min_pct
+     2            42.5             47.9             34.5                       12.6                      -18.9         63.0                         -24.0
+     5            54.8             58.0             41.8                        5.9                      -23.7          NaN                           NaN
+    10            68.0             67.1             48.4                       -1.3                      -28.9          NaN                           NaN
+    25            81.4             81.4             58.6                       -0.0                      -28.0          NaN                           NaN
+    50            94.2             94.1             67.8                       -0.1                      -28.0          NaN                           NaN
+   100           108.5            108.9             78.4                        0.3                      -27.7        105.0                           3.7
+
+== AUDIT with candidate ERA constants, 10-yr, closed-box capacity ==
+  duration_min  i_10yr node  Q_peak  Q_cap_closed(b=0.30)   CF  critical_beta
+           15    67.1   N1    7.17                  3.84 1.87          0.000
+           15    67.1   N2   10.31                  4.89 2.11          0.000
+           15    67.1   N3    6.43                  2.35 2.74          0.000
+           15    67.1   N4    8.44                  5.10 1.66          0.000
+           30    48.4   N1    5.16                  3.84 1.35          0.136
+           30    48.4   N2    7.43                  4.89 1.52          0.059
+           30    48.4   N3    4.63                  2.35 1.97          0.000
+           30    48.4   N4    6.08                  5.10 1.19          0.208
+
+== TIME OF CONCENTRATION: two brackets (reach length only; catchment flow path not in registry) ==
+ node  L_m      S  area_ha  Tc_velocity_min  Tc_kirpich_min  kirpich_over_30min  area_over_50ha
+  N1 2500 0.0120     48.0             11.9            44.3                True           False
+  N2 2250 0.0080     65.0             11.7            47.7                True            True
+  N3 2000 0.0045     42.0             15.5            54.4                True           False
+  N4 2000 0.0055     58.0             11.9            50.3                True            True
+
+== AUDIT with duration = Tc (10-yr, closed box, beta=0.30) ==
+              idf  Tr_yr node Tc_basis  Tc_min  i_mm_hr  Q_peak  Q_cap(b=0.30)   CF  critical_beta
+       candidate     10   N1 velocity    11.9     73.4    7.83           3.84 2.04          0.000
+       candidate     10   N1  kirpich    44.3     38.7    4.13           3.84 1.08          0.263
+       candidate     10   N2 velocity    11.7     73.7   11.32           4.89 2.31          0.000
+       candidate     10   N2  kirpich    47.7     36.9    5.67           4.89 1.16          0.223
+       candidate     10   N3 velocity    15.5     66.2    6.34           2.35 2.70          0.000
+       candidate     10   N3  kirpich    54.4     34.0    3.26           2.35 1.39          0.117
+       candidate     10   N4 velocity    11.9     73.4    9.23           5.10 1.81          0.000
+       candidate     10   N4  kirpich    50.3     35.7    4.49           5.10 0.88          0.359
+registry_formula     10   N1 velocity    11.9     62.8    6.70           3.84 1.75          0.000
+registry_formula     10   N1  kirpich    44.3     33.6    3.59           3.84 0.94          0.332
+registry_formula     10   N2 velocity    11.7     63.1    9.69           4.89 1.98          0.000
+registry_formula     10   N2  kirpich    47.7     32.1    4.94           4.89 1.01          0.295
+registry_formula     10   N3 velocity    15.5     56.8    5.44           2.35 2.31          0.000
+registry_formula     10   N3  kirpich    54.4     29.7    2.84           2.35 1.21          0.199
+registry_formula     10   N4 velocity    11.9     62.8    7.90           5.10 1.55          0.046
+registry_formula     10   N4  kirpich    50.3     31.1    3.92           5.10 0.77          0.417
+
+== USER-SUPPLIED ERA IDF TABLE (xlsx; source page unconfirmed) vs other sources ==
+  duration_min  Tr_yr  user_table  registry_table30  registry_formula  candidate_era  AACRA_Bole_Tedla
+           15      2        80.0               NaN              42.4           47.9              63.0
+           15      5       102.0               NaN              50.4           58.0               NaN
+           15     10       118.0               NaN              57.5           67.1               NaN
+           15     25       135.0               NaN              68.5           81.4               NaN
+           15     50       152.0               NaN              78.1           94.1               NaN
+           15    100       170.0               NaN              89.1          108.9             105.0
+           30      2        55.0              42.5              30.7           34.5               NaN
+           30      5        72.0              54.8              36.6           41.8               NaN
+           30     10        83.0              68.0              41.7           48.4               NaN
+           30     25        95.0              81.4              49.7           58.6               NaN
+           30     50       108.0              94.2              56.7           67.8               NaN
+           30    100       120.0             108.5              64.7           78.4               NaN
+  monotone in duration: True, monotone in Tr: True
+  Sherman fit i = a Tr^m/(d+b)^c: a=967.2 m=0.189 b=10.82 c=0.793  (RMSE ln i = 0.033, max error 6.9 %)
+
+== USER-SUPPLIED GENERIC FLOW PATH (xlsx) ==
+               segment  L_m     S  v_m_s  stated_min  recomputed_min  kinematic_min
+Sheet flow (overland)  100 0.020   0.15        11.1            11.1           19.5
+ Shallow concentrated  300 0.030   0.85         5.9             5.9            NaN
+  Open channel / pipe  600 0.015   1.45         6.9             6.9            NaN
+  total stated 23.9 min; with kinematic-wave sheet flow 32.3 min
+
+== Rational-Method applicability (indicative) ==
+ node  area_ha  channel_travel_min  area_over_50ha                                                                             note
+  N1     48.0                14.6           False overland/inlet time must be added; Rational Method not to be used if Tc > 30 min
+  N2     65.0                13.4            True overland/inlet time must be added; Rational Method not to be used if Tc > 30 min
+  N3     42.0                19.1           False overland/inlet time must be added; Rational Method not to be used if Tc > 30 min
+  N4     58.0                15.9            True overland/inlet time must be added; Rational Method not to be used if Tc > 30 min
+
+figures written to /home/claude/culvert_twin/outputs

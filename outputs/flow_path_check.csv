@@ -1,0 +1,4 @@
+segment,L_m,S,v_m_s,stated_min,recomputed_min,kinematic_min
+Sheet flow (overland),100,0.02,0.15,11.1,11.1,19.5
+Shallow concentrated,300,0.03,0.85,5.9,5.9,
+Open channel / pipe,600,0.015,1.45,6.9,6.9,
