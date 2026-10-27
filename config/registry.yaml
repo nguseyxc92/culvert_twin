@@ -1,0 +1,90 @@
+# ======================================================================================
+# Deep-Learning Surrogate Digital Twins for Predictive Capacity Auditing and Maintenance Optimization
+# Author : Neguse Solomon Mekonnen
+# Date   : October 2026
+# File   : config/registry.yaml
+# ======================================================================================
+# Module 0: provisional data registry for the Jemo-Lancha corridor.
+# Every value below was copied from the author's "Empirical Hydrological, Topographical &
+# Structural Data Registry". Nothing here is verified unless the status block says so.
+# Edit values HERE only; all code reads this file.
+meta:
+  corridor: "Jemo 1 -> Jemo 2/3 -> German Sq. -> Lancha (Nifas Silk-Lafto, Addis Ababa)"
+  status: PROVISIONAL
+  version: "0.1"
+  dem: "Copernicus GLO-30 via OpenTopography (as stated in registry; not re-extracted)"
+status:        # mirror of the register in Document 02, Part A
+  rational_formula: VERIFIED
+  idf_constants: NOT_VERIFIED
+  idf_table_30min: FAILS_INTERNAL_CHECK
+  storm_duration: CONCERN
+  rational_applicability: CONCERN
+  runoff_coefficient: NOT_VERIFIED
+  manning_n: VERIFIED_UPPER_BOUND
+  return_period: PARTLY
+  culvert_dimensions: NOT_VERIFIED
+  qcap_table: FAILS_REPRODUCTION
+  bed_slopes: VERIFIED_ARITHMETIC
+  areas_coordinates: NOT_VERIFIED
+  siltation_range: NOT_VERIFIED
+  observations: NONE
+design:
+  return_period_yr: 10
+  duration_min: 30
+  beta_baseline: 0.30
+  surcharge_duration_s: 3600      # registry assumes 1 h of constant excess flow
+  barrels: {N1: 1, N2: 1, N3: 1, N4: 1}   # UNVERIFIED: registry calls N2 'Twin/Wide' and N4 'Double Trunk' but gives one B x H; 1 barrel assumed
+  capacity_method: closed         # ADOPTED 24 Oct 2026: full-flow box (soffit wetted), P = 2B + 2H_eff. 'open' kept as sensitivity.
+idf:
+  a: 520.4
+  b: 14.5
+  c: 0.78
+  m: 0.19
+  region: "A2 (as labelled in registry; unverified)"
+  table_30min_mm_hr: {2: 42.50, 5: 54.80, 10: 68.00, 25: 81.40, 50: 94.20, 100: 108.50}
+  cross_check_aacra_bole:   # partial values quoted in Tedla (2016), AAU MSc project, Table 4.2 (AACRA Bole IDF curve); mm/hr
+    source: "Tedla S.B. (2016), Sec. 4.3.2.2, Table 4.2 (values quoted in text; not independently checked)"
+    mm_hr: {2: {5: 86, 10: 73, 15: 63}, 100: {5: 138, 10: 119, 15: 105}}
+  user_era_table:           # UNVERIFIED: supplied by the author in config/user_supplied_era_idf_and_tc_analysis.xlsx (sheet 'ERA IDF Table'); source page in the ERA manual not yet identified
+    status: USER_SUPPLIED_SOURCE_UNCONFIRMED
+    durations_min: [5, 10, 15, 20, 30, 60, 120]
+    return_periods_yr: [2, 5, 10, 25, 50, 100]
+    mm_hr: [[120, 150, 175, 200, 225, 250], [95, 120, 140, 160, 180, 200], [80, 102, 118, 135, 152, 170], [70, 90, 105, 120, 135, 150], [55, 72, 83, 95, 108, 120], [35, 45, 52, 60, 68, 75], [22, 28, 33, 38, 43, 48]]
+  candidate_era_a2:         # UNVERIFIED: pasted by user from an external AI answer, 24 Oct 2026. i = C*Tr^m/(d+b)^e
+    status: CANDIDATE_UNVERIFIED
+    C: 682.3
+    m: 0.21
+    b: 15.5
+    e: 0.82
+tc_flow_path:               # UNVERIFIED: ONE generic path from the author's xlsx (sheet 'Catchment Flow Paths (Tc)'); not node-specific
+  source: "config/user_supplied_era_idf_and_tc_analysis.xlsx"
+  segments:
+    - {name: "Sheet flow (overland)",     length_m: 100, slope: 0.02,  v_m_s: 0.15, stated_min: 11.1, surface: "Short grass n=0.15", kind: sheet, n: 0.15}
+    - {name: "Shallow concentrated",      length_m: 300, slope: 0.03,  v_m_s: 0.85, stated_min: 5.9,  surface: "Unpaved/packed soil", kind: shallow}
+    - {name: "Open channel / pipe",       length_m: 600, slope: 0.015, v_m_s: 1.45, stated_min: 6.9,  surface: "Clean earth channel n=0.03", kind: channel}
+uncertainty:             # ASSUMED input ranges for LHS (Module 3). None are verified field values.
+  seed: 20261024
+  n_samples: 2000
+  tc: {mode: velocity_to_kirpich, note: "per-node bracket from tc.py, one common fraction u_tc in [0,1] (storm/catchment response fully correlated across nodes)"}
+  manning_n: {dist: uniform, low: 0.012, high: 0.015, note: "Chow 1959 / Tessema 2011 Table 2.4 concrete box 0.012-0.015; per node, independent"}
+  beta: {dist: uniform, low: 0.0, high: 0.5, note: "ASSUMED siltation range; no local measurement exists; per node, independent"}
+  C: {dist: uniform, halfwidth: 0.05, cap: 0.95, note: "ASSUMED +-0.05 around registry C, capped at 0.95 (Tessema 2016 Table 4-2 upper bound for asphalt)"}
+  scenarios: {return_periods_yr: [10, 25, 50], idf_sources: [registry_formula, candidate, user_table]}
+beta_grid: [0.0, 0.15, 0.30, 0.50, 0.75]
+nodes:
+  - {id: N1, name: "Jemo 1",       lat: 8.9482, lon: 38.7105, z_up: 2240, z_down: 2210, length_m: 2500, slope_registry: 0.0120, area_ha: 48.0, C: 0.80, culvert_class: "Single Box Culvert", B_m: 1.50, H_m: 1.20, n: 0.015}
+  - {id: N2, name: "Jemo 2/3",     lat: 8.9391, lon: 38.7182, z_up: 2210, z_down: 2192, length_m: 2250, slope_registry: 0.0080, area_ha: 65.0, C: 0.85, culvert_class: "Twin/Wide Box Culvert", B_m: 1.80, H_m: 1.40, n: 0.015}
+  - {id: N3, name: "German Sq.",   lat: 8.9284, lon: 38.7290, z_up: 2192, z_down: 2183, length_m: 2000, slope_registry: 0.0045, area_ha: 42.0, C: 0.82, culvert_class: "Single Box Culvert", B_m: 1.50, H_m: 1.20, n: 0.015}
+  - {id: N4, name: "Lancha outlet",lat: 8.9195, lon: 38.7412, z_up: 2183, z_down: 2172, length_m: 2000, slope_registry: 0.0055, area_ha: 58.0, C: 0.78, culvert_class: "Double Trunk Box Culvert", B_m: 2.00, H_m: 1.50, n: 0.015}
+# Registry's own result tables, kept only to test reproduction. Do not use as inputs once rebuilt.
+reported:
+  qcap_m3s:        # rows = beta grid order
+    N1: [5.12, 4.28, 3.41, 2.23, 0.85]
+    N2: [7.04, 5.90, 4.72, 3.11, 1.20]
+    N3: [3.14, 2.63, 2.10, 1.37, 0.52]
+    N4: [6.28, 5.26, 4.21, 2.75, 1.05]
+  audit_10yr_beta030:
+    N1: {qpeak: 7.25,  qcap: 3.41, cf: 2.13, surcharge_m3: 13824}
+    N2: {qpeak: 10.44, qcap: 4.72, cf: 2.21, surcharge_m3: 20592}
+    N3: {qpeak: 6.51,  qcap: 2.10, cf: 3.10, surcharge_m3: 15876}
+    N4: {qpeak: 8.55,  qcap: 4.21, cf: 2.03, surcharge_m3: 15624}

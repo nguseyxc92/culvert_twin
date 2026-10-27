@@ -1,0 +1,16 @@
+# Deep-Learning Surrogate Digital Twins for Predictive Capacity Auditing and Maintenance Optimization
+# Authors: Neguse Solomon Mekonnen, Wondesen Tsegaye Legesse
+# Date   : October 2026
+# File   : CITATION.cff
+cff-version: 1.3.0
+message: "If you use this code, please cite it as below. Not peer reviewed (pre-submission)."
+title: "Deep-Learning Surrogate Digital Twins for Predictive Capacity Auditing and Maintenance Optimization: code repository"
+authors:
+  - family-names: Mekonnen
+    given-names: Neguse Solomon
+    orcid: "https://orcid.org/0009-0009-8145-4007"
+    affiliation: "University of Padova, Department of Civil, Environmental and Architectural Engineering (ICEA)"
+  - family-names: Legesse
+    given-names: Wondesen Tsegaye
+date-released: 2026-10-26
+version: 1.3.0
