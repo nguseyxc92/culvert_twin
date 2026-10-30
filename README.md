@@ -4,7 +4,7 @@
 **Authors:** Neguse Solomon Mekonnen, Wondesen Tsegaye Legesse  **Date:** October 2026
 **Case study:** Jemo–Lancha culvert corridor, Nifas Silk-Lafto, Addis Ababa (four box-culvert nodes).
 **Status:** Manuscript complete, ready for submission (target: Reliability Engineering & System Safety or Journal of Hydrology). Code and results are reproducible from the stored SWMM results.
-**Affiliation:** Tebib. ORCID 0009-0009-8145-4007.
+ORCID 0009-0009-8145-4007.
 
 ## What this repository does
 1. Samples storm, roughness, siltation and runoff uncertainty by Latin Hypercube Sampling (13 inputs).
